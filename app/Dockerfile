@@ -1,0 +1,28 @@
+# Use a Python base image
+FROM python:3.9-slim
+
+# Install system dependencies including libgl1-mesa-glx and libglib2.0-0
+RUN apt-get update && apt-get install -y \
+    libgl1-mesa-glx \
+    libglib2.0-0 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set environment variables
+ENV MODEL_NAME=captcha-ocr-model
+
+# Copy the TensorFlow SavedModel and Flask application files into the container
+COPY ../models /models
+COPY . /app
+
+# Install dependencies required by your Flask application
+RUN pip install --no-cache-dir -r /app/requirements.txt
+
+# Set the working directory
+WORKDIR /app
+
+# Set Flask environment variables
+ENV FLASK_APP=app.py
+ENV FLASK_ENV=production
+
+# Start the Flask application with Gunicorn
+CMD ["gunicorn", "app:app"]
