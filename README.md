@@ -1,7 +1,7 @@
 # Captcha OCR Deployment
 This repository focuses on deploying Machine Learning models, specifically the model I've built to crack those pesky Captcha images (Captcha Optical Character Recognition). You know the ones—those squiggly letters and distorted numbers that pop up when you're trying to log in somewhere. They're like the vigilant bouncers at the internet club, ensuring that sneaky bots don't crash the party.
 
-~ Image
+![Untitled](https://github.com/ndy-s/captcha-ocr-deploy/assets/94002483/e9ca4056-ad72-47b5-aefb-03785ab85265)
 
 The dataset I used is sourced from Kaggle, specifically the [Captcha Version 2 Images](https://www.kaggle.com/datasets/fournierp/captcha-version-2-images). However, here’s the catch: it’s a toy dataset. While it’s perfect for tinkering and learning, don’t expect it to handle real-world Captchas like a superhero.
 
