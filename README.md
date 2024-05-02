@@ -7,25 +7,66 @@ The dataset I used is sourced from Kaggle, specifically the [Captcha Version 2 I
 
 Regarding the architecture, I've drawn inspiration from various sources. However, it seems there are some overfitting issues. Fear not—I might improve the model's performance in the future (hopefully...).
 
-Okay, enough with the brief introduction. The deployment is divided into several parts. For now, I'm using tf-serving and flask deployment using the free deployment service [Railway](https://railway.app/). You'll get a free trial if you're new to Railway, so it's good for experimenting with deployment without worrying about costs. I might add some other deployment techniques and services like GCP or AWS in the future.
+Okay, enough with the brief introduction. The deployment is divided into several parts. For now, I'm using tf-serving and flask deployment using the free deployment service [Railway](https://railway.app/). You'll get a free trial if you're new to Railway, so it's good for experimenting with deployment without worrying about costs. Additionally, Docker deployment is available. You can test it locally using Docker by following the instructions provided in the repository. I might add some other deployment techniques and services like GCP or AWS in the future.
 
 ## Project Overview
 The project repository contains several files and folders. I'll focus more on the deployment components:
 1. `data` **Folder**: This directory stores the dataset used for training.
 2. `model_deployment.ipynb`: This file contains the model development process. While I won’t delve into the details here, you can explore the comments and markdown within the notebook.
 3. `models` **Folder**: Within this directory, you’ll find the trained model data and other assets necessary for prediction.
-4. `Dockerfile`: An essential file that automates the deployment process.
-5. `prediction_data` **Folder**: This directory holds unseen data, which is used to test the deployed model.
-6. `model_prediction.ipynb`: A Jupyter notebook for testing the deployed model.
-7. `app` **Folder**: This directory houses the Flask application responsible for captcha prediction. It offers an alternative approach for deploying the entire system and performing predictions.
+4. `Dockerfile.dev`: This file is used for development using Docker deployment. It automates the deployment process in a development environment.
+5. `Dockerfile.prod`: This file is used for production using Railway deployment. It automates the deployment process for production environments.
+6. `prediction_data` **Folder**: This directory holds unseen data, which is used to test the deployed model.
+7. `model_prediction.ipynb`: A Jupyter notebook for testing the deployed model.
+8. `app` **Folder**: This directory houses the Flask application responsible for captcha prediction. It offers an alternative approach for deploying the entire system and performing predictions.
 
-## Setting Up Railway
+## Getting Started
+Before we dive in, let's set up our project. Start by cloning this repository to your local machine. Run the following command in your terminal:
+```
+git clone https://github.com/ndy-s/captcha-ocr-deploy.git
+```
+Navigate to the project folder using:
+```
+cd captcha-ocr-deploy
+```
+Now that you're in the project folder, let's continue with the deployment process.
+
+## Railway Deployment
+### Setting Up Railway
 Assuming you already have a Railway account, follow these steps to create a new project:
 1. Log in to Railway.
 2. Click on "Create Project".
 3. Choose an empty project (you can name it as you like).
-
+4. You need to install Railway CLI to interact with Railway from your local terminal. Follow the guide [here](https://docs.railway.app/guides/cli).
+   
 Now you’re ready to proceed with deploying your machine learning model using Railway!
+
+### Railway TensorFlow Serving Model Deployment
+To deploy the model using Railway, follow these steps:
+1. Run `railway login` in your terminal. This will navigate you to the browser to log in.
+2. After logging in, run `railway init`. If you haven't made a Railway project yet, do this step. Otherwise, you can **SKIP** it.
+3. Next, link your project. You can find the command to do this in your Railway project dashboard. Click on "Set the project locally," and you'll find a command like this: `railway link xxxx-xxx-xxx-xxxx`. Replace `xxxx-xxx-xxx-xxxx` with your project ID.
+4. To deploy your model, simply run `railway up` and wait for the deployment process to complete.
+5. For this project, since our Dockerfile for production is named `Dockerfile.prod`, we need to define it explicitly in the project settings service variables. Refer to the image below for reference:<br>
+   <img src="https://github.com/ndy-s/captcha-ocr-deploy/assets/94002483/9a23a39e-7c90-41fe-b57d-c737e5c0701c" height="300">
+6. Once the deployment process is finished, you can generate a domain for your deployed model. You can find this option in your Railway project service settings. See the image below for reference:<br>
+   <img src="https://github.com/ndy-s/captcha-ocr-deploy/assets/94002483/a0222d1c-9398-43e8-9f11-1798cf08514d" width="300">
+7. After you have obtained your domain, you can access the model to see the metadata. Visit `{YOUR_GENERATED_DOMAIN}/v1/models/captcha-ocr-model/metadata` to view the metadata.
+8. Once you have found the metadata, update the `api_url` variable in the `model_prediction.ipynb` file to your generated domain `{YOUR_GENERATED_DOMAIN}/v1/models/captcha-ocr-model:predict`, and run all the code to test predictions on your deployed model.
+
+### Railway Flask Deployment
+To deploy the Flask application on Railway, follow these steps:
+1. Navigate to the `app` folder by running `cd .\app\` in your terminal to move to the app folder.
+2. After that, relogin and link again to the Railway project, using `railway login` and `railway init`. This instructs Railway to focus deployment in this folder, so it won't use Dockerfile outside the folder.
+3. Run `railway up` to deploy your model and wait until the deploying finished.
+4. After finished you can Access the generated domain, and you're all set! You can interact with the web service deployed using Railway. Upload some images from `prediction_data` folder to do some predictions on the deployed model.<br>
+   <img src="https://github.com/ndy-s/captcha-ocr-deploy/assets/94002483/85635ab5-15f3-4e13-8ea3-da47f6041616" height="200">
+   <img src="https://github.com/ndy-s/captcha-ocr-deploy/assets/94002483/80469823-36c3-47df-8b4a-42ff2add6e75" height="200">
+   
+## Docker Deployment
+### Docker Model Deployment
+I have provided a Docker deployment setup for each part to test it locally it's named `Dockerfile.dev` for development. If you want to deploy using Docker, follow these steps:
+TBA
 
 ## License
 MIT
