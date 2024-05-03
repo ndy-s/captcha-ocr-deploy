@@ -38,7 +38,8 @@ Assuming you already have a Railway account, follow these steps to create a new 
 1. Log in to Railway.
 2. Click on "Create Project".
 3. Choose an empty project (you can name it as you like).
-4. You need to install Railway CLI to interact with Railway from your local terminal. Follow the guide [here](https://docs.railway.app/guides/cli).
+4. Then click on "Add a Service" and choose an empty service. After that, click "Deploy" (it will show a pop-up to apply the changes).
+5. You need to install Railway CLI to interact with Railway from your local terminal. Follow the guide [here](https://docs.railway.app/guides/cli).
    
 Now you’re ready to proceed with deploying your machine learning model using Railway!
 
@@ -63,9 +64,21 @@ To deploy the Flask application on Railway, follow these steps:
    <img src="https://github.com/ndy-s/captcha-ocr-deploy/assets/94002483/80469823-36c3-47df-8b4a-42ff2add6e75" height="200">
    
 ## Docker Deployment
+For Docker deployment, I've provided a Docker setup named `Dockerfile.dev` for development purposes. Before proceeding, ensure you have Docker Engine installed on your system. You can find the installation process [here](https://docs.docker.com/engine/install/). Assuming you already have Docker Desktop running on your PC.
+
 ### Docker Model Deployment
-I have provided a Docker deployment setup for each part to test it locally it's named `Dockerfile.dev` for development. If you want to deploy using Docker, follow these steps:
-TBA
+To deploy the model using Docker, follow these steps:
+1. Make sure you're already in the project directory in your terminal, then what you need is build the docker image based on `Dockefile.dev` file. Run this command `docker build -t captcha-ocr-model -f Dockerfile.dev .` to build docker image based on `Dockerfile.dev` file.
+2. Once the image has finished building, all you need to do is run the image in a container. Use this command `docker run -p 8502:8501 captcha-ocr-model`.
+3. After the image has been deployed, you can check the model metadata by visiting `localhost:8502/v1/models/captcha-ocr-model/metadata`.
+4. Once you have retrieved the metadata, update the `api_url` variable in the `model_prediction.ipynb` file with your localhost port `localhost:8502/v1/models/captcha-ocr-model:predict`. Then, run all the code to test predictions on your deployed model.
+
+### Docker Flask Deployment
+To deploy the Flask application on Docker, follow these steps:
+1. Navigate to the `app` folder by running `cd ./app/` in your terminal to move to the app folder.
+2. Build the Docker image based on the Dockerfile.dev file. Run this command `docker build -t captcha-flask-app -f Dockerfile.dev .` to build docker image based on `Dockerfile.dev` file.
+3. Once the image is built, all you need to do is run the image in a Docker container using this command `docker run captcha-flask-app`.
+4. Now, you can access the web service using the URL `localhost:8500`. Upload some images from the `prediction_data` folder to perform predictions on the deployed model.
 
 ## License
 MIT
