@@ -39,7 +39,7 @@ Assuming you already have a Railway account, follow these steps to create a new 
 1. Log in to Railway.
 2. Click on "Create Project".
 3. Choose an empty project (you can name it as you like).
-4. Then click on "Add a Service" and choose an empty service. After that, click "Deploy" (it will show a pop-up to apply the changes).
+4. Then click on "Add a Service" and choose an empty service (it will show a pop-up to apply the changes). After that, click "Deploy".
 5. You need to install Railway CLI to interact with Railway from your local terminal. Follow the guide [here](https://docs.railway.app/guides/cli).
    
 Now you’re ready to proceed with deploying your machine learning model using Railway!
@@ -82,7 +82,7 @@ To deploy the model using Docker:
 
 ### Docker Flask Deployment
 To deploy the Flask application on Docker:
-1. Navigate to the `app` folder by running `cd ./app/` in your terminal to move to the app folder.
+1. Navigate to the `app` folder by running `cd app` in your terminal to move to the app folder.
 2. Build the Docker image based on the `Dockerfile.dev` file. Run this command:
    ```
    docker build -t captcha-flask-app -f Dockerfile.dev .
