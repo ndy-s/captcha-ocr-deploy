@@ -68,7 +68,7 @@ For Docker deployment, I've provided a Docker setup named `Dockerfile.dev` for d
 
 ### Docker Model Deployment
 To deploy the model using Docker, follow these steps:
-1. Make sure you're already in the project directory in your terminal, then what you need is build the docker image based on `Dockefile.dev` file. Run this command `docker build -t captcha-ocr-model -f Dockerfile.dev .` to build docker image based on `Dockerfile.dev` file.
+1. Make sure you're already in the project directory in your terminal, then what you need is build the docker image based on `Dockefile.dev` file. Run this command `docker build -t captcha-ocr-model -f Dockerfile.dev .`.
 2. Once the image has finished building, all you need to do is run the image in a container. Use this command `docker run -p 8502:8501 captcha-ocr-model`.
 3. After the image has been deployed, you can check the model metadata by visiting `localhost:8502/v1/models/captcha-ocr-model/metadata`.
 4. Once you have retrieved the metadata, update the `api_url` variable in the `model_prediction.ipynb` file with your localhost port `localhost:8502/v1/models/captcha-ocr-model:predict`. Then, run all the code to test predictions on your deployed model.
@@ -76,9 +76,9 @@ To deploy the model using Docker, follow these steps:
 ### Docker Flask Deployment
 To deploy the Flask application on Docker, follow these steps:
 1. Navigate to the `app` folder by running `cd ./app/` in your terminal to move to the app folder.
-2. Build the Docker image based on the Dockerfile.dev file. Run this command `docker build -t captcha-flask-app -f Dockerfile.dev .` to build docker image based on `Dockerfile.dev` file.
-3. Once the image is built, all you need to do is run the image in a Docker container using this command `docker run captcha-flask-app`.
-4. Now, you can access the web service using the URL `localhost:8500`. Upload some images from the `prediction_data` folder to perform predictions on the deployed model.
+2. Build the Docker image based on the `Dockerfile.dev` file. Run this command `docker build -t captcha-flask-app -f Dockerfile.dev .`.
+3. Once the image is built, all you need to do is run the image in a Docker container using this command `docker run -p 5001:5000 captcha-flask-app`.
+4. Now, you can access the web service using the URL `localhost:5001`. Upload some images from the `prediction_data` folder to perform predictions on the deployed model.
 
 ## License
 MIT
