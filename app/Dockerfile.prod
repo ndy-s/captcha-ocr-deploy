@@ -14,15 +14,15 @@ ENV MODEL_NAME=captcha-ocr-model
 COPY ../models /models
 COPY . /app
 
-# Install dependencies required by your Flask application
-RUN pip install --no-cache-dir -r /app/requirements.txt
-
 # Set the working directory
 WORKDIR /app
+
+# Install dependencies required by your Flask application
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Set Flask environment variables
 ENV FLASK_APP=app.py
 ENV FLASK_ENV=production
 
-# # Start the Flask application with Gunicorn
+# Start the Flask application with Gunicorn
 CMD ["gunicorn", "app:app"]
