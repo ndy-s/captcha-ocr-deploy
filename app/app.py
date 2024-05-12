@@ -16,7 +16,7 @@ def preprocess_image(img):
     return img
 
 # Load the saved model
-MODEL_PATH = "../models/captcha-ocr-model/1"
+MODEL_PATH = "./models/captcha-ocr-model/1"
 model = tf.saved_model.load(MODEL_PATH)
 
 # Load the characters_keys list from the text file
